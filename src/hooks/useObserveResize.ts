@@ -1,20 +1,22 @@
 import { useEffect, useCallback, RefObject } from "react";
 
-export function useObserveResize(
-  ref: RefObject<Element>,
+export function useObserveResize<T extends Element | null>(
+  ref: RefObject<T>,
   callback: (entry: ResizeObserverEntry) => void
 ): void {
   useEffect(() => {
-    if (!ref.current || !window.ResizeObserver) {
+    const element = ref.current;
+    if (!element || typeof ResizeObserver === "undefined") {
       return;
     }
 
     const observer = new ResizeObserver((entries) => {
-      if (!ref.current) return;
-      callback(entries[0]);
+      if (entries[0]) {
+        callback(entries[0]);
+      }
     });
 
-    observer.observe(ref.current);
+    observer.observe(element);
 
     return () => {
       observer.disconnect();

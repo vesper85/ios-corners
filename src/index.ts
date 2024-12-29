@@ -1,3 +1,3 @@
-export const calculate = (a: number, b: number) => {
-  return a + b;
-};
+export { Squircle } from "./components/Squircle";
+export { DEFAULT_RATIO } from "./utils/squircle";
+export type { SquircleProps } from "./types";
